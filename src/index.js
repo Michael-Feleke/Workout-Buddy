@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose, { mongo } from "mongoose";
 import dotenv from "dotenv";
 import workoutRouter from "./routes/workout.js";
 
@@ -20,7 +21,16 @@ app.use((req, res, next) => {
 app.use("/api/workout/", workoutRouter);
 
 const PORT = process.env.PORT;
+const MONGO_URI = process.env.MONGO_URI;
 
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
+mongoose
+  .connect(MONGO_URI)
+  .then(() => {
+    console.log("DB connected successfully");
+    app.listen(PORT, () => {
+      console.log(`Listening on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
