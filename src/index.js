@@ -1,9 +1,7 @@
 import express from "express";
-import dotenv from "dotenv";
 import workoutRouter from "./routes/workout.js";
 import { connectDB } from "./config/database.js";
-
-dotenv.config();
+import { PORT } from "./utils/constants.js";
 
 //express app
 const app = express();
@@ -16,8 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/workout/", workoutRouter);
 
 // Port setup
-const PORT = process.env.PORT || 5000;
-
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
