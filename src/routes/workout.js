@@ -6,17 +6,18 @@ import {
   getWorkouts,
   updateWorkout,
 } from "../controllers/workoutController.js";
+import { catchAsync } from "../utils/catchAsync.js";
 
 const router = express.Router();
 
-router.get("/", getWorkouts);
+router.get("/", catchAsync(getWorkouts));
 
-router.get("/:id", getWorkout);
+router.get("/:id", catchAsync(getWorkout));
 
-router.post("/", createWorkout);
+router.post("/", catchAsync(createWorkout));
 
-router.delete("/:id", deleteWorkout);
+router.delete("/:id", catchAsync(deleteWorkout));
 
-router.put("/:id", updateWorkout);
+router.put("/:id", catchAsync(updateWorkout));
 
 export default router;
