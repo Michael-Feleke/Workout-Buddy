@@ -13,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 app.use("/api/workout/", workoutRouter);
 
-// Port setup
+// DB connection
 connectDB()
   .then(() => {
     app.listen(PORT, () => {
@@ -21,5 +21,6 @@ connectDB()
     });
   })
   .catch((error) => {
-    console.log(`Failed to connect to database: ${error.message}`);
+    console.error(`Failed to connect to the database: ${error.message}`);
+    process.exit(1);
   });
