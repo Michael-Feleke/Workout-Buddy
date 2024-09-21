@@ -3,20 +3,25 @@ import * as Statics from "./statics.js";
 
 const Schema = mongoose.Schema;
 
-const workoutSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
+const workoutSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    reps: {
+      type: Number,
+      required: true,
+    },
+    load: {
+      type: Number,
+      required: true,
+    },
   },
-  reps: {
-    type: Number,
-    required: true,
-  },
-  load: {
-    type: Number,
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 workoutSchema.static(Statics);
 
