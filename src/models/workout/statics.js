@@ -1,19 +1,19 @@
-export const getAllWorkouts = async () => {
+export async function getAllWorkouts() {
   return this.find().sort({ createdAt: -1 });
-};
+}
 
-export const getSingleWorkout = async (id) => {
+export async function getSingleWorkout(id) {
   return this.findById(id);
-};
+}
 
-export const createNewWorkout = async (newWorkout) => {
+export async function createNewWorkout(newWorkout) {
   return this.create(newWorkout);
-};
+}
 
-export const deleteSingleWorkout = async (id) => {
+export async function deleteSingleWorkout(id) {
   return this.findByIdAndDelete(id);
-};
+}
 
-export const updateWorkout = async (id, updatedWorkout) => {
+export async function updateWorkout(id, updatedWorkout) {
   return this.findByIdAndUpdate(id, updatedWorkout, { new: true });
-};
+}
