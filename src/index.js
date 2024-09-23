@@ -1,5 +1,6 @@
 import express from "express";
-import workoutRouter from "./routes/workout.js";
+import authRouter from "./routes/authRoutes.js";
+import workoutRouter from "./routes/workoutRoutes.js";
 import { connectDB } from "./config/database.js";
 import { PORT } from "./utils/constants.js";
 
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
+app.use("/auth", authRouter);
 app.use("/api/workout/", workoutRouter);
 
 // DB connection
