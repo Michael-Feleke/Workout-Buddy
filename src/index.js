@@ -3,6 +3,7 @@ import authRouter from "./routes/authRoutes.js";
 import workoutRouter from "./routes/workoutRoutes.js";
 import { connectDB } from "./config/database.js";
 import { PORT } from "./utils/constants.js";
+import { globalErrorHandler } from "./controllers/errorController.js";
 
 //express app
 const app = express();
@@ -14,6 +15,9 @@ app.use(express.urlencoded({ extended: true }));
 //routes
 app.use("/auth", authRouter);
 app.use("/api/workout/", workoutRouter);
+
+//Error handler
+app.use(globalErrorHandler);
 
 // DB connection
 connectDB()
