@@ -1,4 +1,4 @@
-export async function singUpUser(newUser) {
+export async function signUpUser(newUser) {
   return this.create(newUser);
 }
 
