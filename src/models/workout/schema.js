@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import * as Statics from "./statics.js";
 
 const Schema = mongoose.Schema;
 
@@ -22,7 +21,5 @@ const workoutSchema = new Schema(
     timestamps: true,
   }
 );
-
-workoutSchema.static(Statics);
 
 export default workoutSchema;
