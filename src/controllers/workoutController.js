@@ -1,4 +1,4 @@
-import Workout from "../models/workout/model.js";
+import Workout from "../models/workout/index.js";
 import AppError from "../utils/appError.js";
 import { isValidMongoId } from "../utils/isValidMongoId.js";
 
