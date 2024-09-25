@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import * as Statics from "./statics.js";
 import isEmail from "validator/lib/isEmail.js";
 
 const Schema = mongoose.Schema;
@@ -31,7 +30,5 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
-
-userSchema.static(Statics);
 
 export default userSchema;
