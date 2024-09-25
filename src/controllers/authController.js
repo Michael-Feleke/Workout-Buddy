@@ -1,4 +1,4 @@
-import User from "../models/user/model.js";
+import User from "../models/user/index.js";
 
 const singUpUser = async (req, res, next) => {
   const { email, password } = req.body;
