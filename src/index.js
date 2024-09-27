@@ -5,6 +5,7 @@ import { connectDB } from "./config/database.js";
 import { PORT } from "./utils/constants.js";
 import { globalErrorHandler } from "./controllers/errorController.js";
 import cookieParser from "cookie-parser";
+import { requireAuth } from "./middlewares/authMiddleware.js";
 
 //express app
 const app = express();
@@ -14,8 +15,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-//routes
+//authentication
 app.use("/auth", authRouter);
+app.use(requireAuth);
+
+//api
 app.use("/api/workout/", workoutRouter);
 
 //Error handler
