@@ -1,5 +1,5 @@
 import User from "../models/user/index.js";
-import { MAX_COOKIE_AGE } from "../utils/constants.js";
+import { IS_IN_PRODUCTION, MAX_COOKIE_AGE } from "../utils/constants.js";
 import { createToken } from "../utils/createToken.js";
 
 const singUpUser = async (req, res, next) => {
@@ -11,7 +11,7 @@ const singUpUser = async (req, res, next) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    //secure: true,
+    secure: IS_IN_PRODUCTION,
     sameSite: "strict",
     maxAge: MAX_COOKIE_AGE,
   });
@@ -28,7 +28,7 @@ const logInUser = async (req, res, next) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    //secure: true,
+    secure: IS_IN_PRODUCTION,
     sameSite: "strict",
     maxAge: MAX_COOKIE_AGE,
   });
@@ -36,6 +36,11 @@ const logInUser = async (req, res, next) => {
   return res.status(200).send({ user: loggedUser._id });
 };
 
-const logOutUser = async (req, res, next) => {};
+const logOutUser = async (req, res, next) => {
+  res.clearCookie("jwt");
+  res.status(200).send({
+    message: "Logged out successfully",
+  });
+};
 
 export { singUpUser, logInUser, logOutUser };
