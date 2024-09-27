@@ -8,6 +8,7 @@ export const requireAuth = (req, res, next) => {
   if (token) {
     jwt.verify(token, JWT_SECRET, async (err, decodedToken) => {
       if (err) {
+        console.log(err.message);
         return res.status(401).send({
           status: "error",
           message: "Unauthorized: No token provided",
