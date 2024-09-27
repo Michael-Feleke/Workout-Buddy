@@ -16,4 +16,8 @@ export async function logInUser({ email, password }) {
   throw new AppError("Incorrect email", 400);
 }
 
+export async function findUserById(id) {
+  return await this.findById(id);
+}
+
 export async function logOutUser() {}
