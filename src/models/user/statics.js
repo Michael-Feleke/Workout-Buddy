@@ -19,5 +19,3 @@ export async function logInUser({ email, password }) {
 export async function findUserById(id) {
   return await this.findById(id);
 }
-
-export async function logOutUser() {}
