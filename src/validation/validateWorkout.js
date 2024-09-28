@@ -27,8 +27,17 @@ const workoutSchema = Joi.object({
 const validateWorkout = (req, res, next) => {
   const { error } = workoutSchema.validate(req.body, { abortEarly: false });
   if (error) {
-    const errorDetails = error.details.map((detail) => detail.message);
-    return res.status(400).json({ errors: errorDetails });
+    const errorDetails = error.details.map((detail) => ({
+      field: detail.context.label,
+      message: detail.message,
+    }));
+
+    return res.status(400).send({
+      status: "error",
+      message: "Validation failed",
+      errors: errorDetails,
+      statusCode: 400,
+    });
   }
   next();
 };

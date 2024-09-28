@@ -15,7 +15,7 @@ export const requireAuth = (req, res, next) => {
           statusCode: 401,
         });
       } else {
-        let foundUser = await User.findUserById(decodedToken.id);
+        const foundUser = await User.findUserById(decodedToken.id);
         req.foundUser = foundUser;
         next();
       }
