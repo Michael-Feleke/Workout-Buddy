@@ -1,9 +1,9 @@
 export async function getAllWorkouts() {
-  return this.find().sort({ createdAt: -1 });
+  return this.find().populate("createdBy", "email").sort({ createdAt: -1 });
 }
 
 export async function getSingleWorkout(id) {
-  return this.findById(id);
+  return this.findById(id).populate("createdBy", "email");
 }
 
 export async function createNewWorkout(newWorkout) {
