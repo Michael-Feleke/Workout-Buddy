@@ -9,6 +9,7 @@ export const globalErrorHandler = (err, req, res, next) => {
   res.status(statusCode).json({
     status: "error",
     message: err.message || defaultErrorMessage,
+    errors: err.errors,
     statusCode,
   });
 };
