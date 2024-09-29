@@ -18,8 +18,9 @@ const getWorkout = async (req, res, next) => {
 };
 
 const createWorkout = async (req, res, next) => {
+  const user = req.foundUser;
   const { title, reps, load } = req.body;
-  const newWorkout = { title, reps, load };
+  const newWorkout = { title, reps, load, createdBy: user._id };
 
   const workout = await Workout.createNewWorkout(newWorkout);
   res.status(200).json(workout);
