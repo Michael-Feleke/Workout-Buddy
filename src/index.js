@@ -1,11 +1,14 @@
 import express from "express";
+import cookieParser from "cookie-parser";
+import helmet from "helmet";
+import morgan from "morgan";
 import authRouter from "./routes/authRoutes.js";
 import workoutRouter from "./routes/workoutRoutes.js";
 import { connectDB } from "./config/database.js";
-import { PORT } from "./utils/constants.js";
+import { MORGAN_FORMAT, PORT } from "./utils/constants.js";
 import { globalErrorHandler } from "./controllers/errorController.js";
-import cookieParser from "cookie-parser";
 import { requireAuth } from "./middlewares/authMiddleware.js";
+import logger from "./config/logger.js";
 
 //express app
 const app = express();
@@ -14,6 +17,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(helmet());
+app.use(morgan(MORGAN_FORMAT));
 
 //authentication
 app.use("/auth", authRouter);
@@ -26,13 +31,17 @@ app.use("/api/workout/", workoutRouter);
 app.use(globalErrorHandler);
 
 // DB connection
-connectDB()
-  .then(() => {
+const startServer = async () => {
+  try {
+    await connectDB();
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      logger.info(`Server is running on port ${PORT}`);
     });
-  })
-  .catch((error) => {
-    console.error(`Failed to connect to the database: ${error.message}`);
+  } catch (error) {
+    logger.error(`Failed to connect to the database: ${error.message}`);
     process.exit(1);
-  });
+  }
+};
+
+// Start server
+startServer();
