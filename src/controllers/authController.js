@@ -1,5 +1,5 @@
 import User from "../models/user/index.js";
-import { IS_IN_PRODUCTION, MAX_COOKIE_AGE } from "../utils/constants.js";
+import { ENVIRONMENT, MAX_COOKIE_AGE } from "../utils/constants.js";
 import { createToken } from "../utils/createToken.js";
 
 const singUpUser = async (req, res, next) => {
@@ -11,7 +11,7 @@ const singUpUser = async (req, res, next) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: IS_IN_PRODUCTION,
+    secure: ENVIRONMENT === "production",
     sameSite: "strict",
     maxAge: MAX_COOKIE_AGE,
   });
@@ -28,7 +28,7 @@ const logInUser = async (req, res, next) => {
 
   res.cookie("jwt", token, {
     httpOnly: true,
-    secure: IS_IN_PRODUCTION,
+    secure: ENVIRONMENT === "production",
     sameSite: "strict",
     maxAge: MAX_COOKIE_AGE,
   });
