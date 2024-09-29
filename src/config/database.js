@@ -1,26 +1,25 @@
 import mongoose from "mongoose";
 import { MONGO_URI } from "../utils/constants.js";
+import logger from "./logger.js";
 
 export const connectDB = async () => {
   try {
     await mongoose.connect(MONGO_URI);
-
-    console.log("MongoDB connected");
+    logger.info("MongoDB connected");
 
     mongoose.connection.on("connected", () => {
-      console.log("Mongoose connected to DB");
+      logger.info("Mongoose connected to DB");
     });
 
     mongoose.connection.on("error", (err) => {
-      console.error(`Mongoose connection error: ${err.message}`);
-      throw new Error(err);
+      logger.error(`Mongoose connection error: ${err.message}`);
     });
 
     mongoose.connection.on("disconnected", () => {
-      console.log("Mongoose disconnected");
+      logger.info("Mongoose disconnected");
     });
   } catch (error) {
-    console.log(`Initial connection Error: ${error.message}`);
+    logger.error(`Initial connection Error: ${error.message}`);
     throw new Error("MongoDB connection failed!");
   }
 };
