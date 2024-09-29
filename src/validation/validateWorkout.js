@@ -1,4 +1,5 @@
 import Joi from "joi";
+import AppError from "../utils/appError.js";
 
 const workoutSchema = Joi.object({
   title: Joi.string().trim().min(3).max(255).required().messages({
@@ -32,12 +33,7 @@ const validateWorkout = (req, res, next) => {
       message: detail.message,
     }));
 
-    return res.status(400).send({
-      status: "error",
-      message: "Validation failed",
-      errors: errorDetails,
-      statusCode: 400,
-    });
+    return next(new AppError("Validation failed", 400, errorDetails));
   }
   next();
 };
