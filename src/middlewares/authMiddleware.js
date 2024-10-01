@@ -18,7 +18,7 @@ export const requireAuth = (req, res, next) => {
     }
 
     try {
-      const foundUser = await User.findById(decodedToken.id);
+      const foundUser = await User.findUserById(decodedToken.id);
 
       if (!foundUser) {
         return next(new AppError("Unauthorized: User not found", 401));
