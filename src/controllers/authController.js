@@ -1,13 +1,12 @@
 import User from "../models/user/index.js";
 import { ENVIRONMENT, MAX_COOKIE_AGE } from "../utils/constants.js";
-import { createToken } from "../utils/createToken.js";
 
 const singUpUser = async (req, res, next) => {
   const { email, password } = req.body;
   const newUser = { email, password };
 
   const createdUser = await User.signUpUser(newUser);
-  const token = createToken(createdUser._id);
+  const token = createdUser.generateAuthToken();
 
   res.cookie("jwt", token, {
     httpOnly: true,
@@ -16,7 +15,9 @@ const singUpUser = async (req, res, next) => {
     maxAge: MAX_COOKIE_AGE,
   });
 
-  return res.status(201).send({ user: createdUser._id });
+  return res
+    .status(201)
+    .send({ _id: createdUser._id, email: createdUser.email });
 };
 
 const logInUser = async (req, res, next) => {
@@ -24,7 +25,7 @@ const logInUser = async (req, res, next) => {
   const user = { email, password };
 
   const loggedUser = await User.logInUser(user);
-  const token = createToken(loggedUser._id);
+  const token = loggedUser.generateAuthToken();
 
   res.cookie("jwt", token, {
     httpOnly: true,
@@ -33,7 +34,7 @@ const logInUser = async (req, res, next) => {
     maxAge: MAX_COOKIE_AGE,
   });
 
-  return res.status(200).send({ user: loggedUser._id });
+  return res.status(200).send({ _id: loggedUser._id, email: loggedUser.email });
 };
 
 const logOutUser = async (req, res, next) => {
