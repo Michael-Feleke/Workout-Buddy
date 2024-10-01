@@ -7,18 +7,17 @@ import {
   updateWorkout,
 } from "../controllers/workoutController.js";
 import { validateWorkout } from "../validation/validateWorkout.js";
-import { catchAsync } from "../utils/catchAsync.js";
 
 const router = express.Router();
 
-router.get("/", catchAsync(getWorkouts));
+router.get("/", getWorkouts);
 
-router.get("/:id", catchAsync(getWorkout));
+router.get("/:id", getWorkout);
 
-router.post("/", validateWorkout, catchAsync(createWorkout));
+router.post("/", validateWorkout, createWorkout);
 
-router.delete("/:id", catchAsync(deleteWorkout));
+router.delete("/:id", deleteWorkout);
 
-router.put("/:id", catchAsync(updateWorkout));
+router.put("/:id", updateWorkout);
 
 export default router;
